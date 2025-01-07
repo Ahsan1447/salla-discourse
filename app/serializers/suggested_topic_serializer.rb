@@ -15,7 +15,9 @@ class SuggestedTopicSerializer < ListableTopicSerializer
              :views,
              :category_id,
              :featured_link,
-             :featured_link_root_domain
+             :featured_link_root_domain,
+             :category,
+             :topic_creator
   has_many :posters, serializer: SuggestedPosterSerializer, embed: :objects
 
   def posters
@@ -32,5 +34,22 @@ class SuggestedTopicSerializer < ListableTopicSerializer
 
   def include_featured_link_root_domain?
     SiteSetting.topic_featured_link_enabled && object.featured_link
+  end
+
+  def category
+    {
+      id: object.category.id,
+      name: object.category.name,
+      topic_title: object.title,
+      only_admin_can_post: object.category.groups.exists?(name: "admins")
+    }
+  end
+
+  def topic_creator
+    {
+      id: object.user&.id,
+      username: object.user&.username,
+      avatar: object.user&.avatar_template
+    }
   end
 end

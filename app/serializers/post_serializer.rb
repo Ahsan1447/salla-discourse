@@ -2,7 +2,7 @@
 
 class PostSerializer < BasicPostSerializer
   # To pass in additional information we might need
-  INSTANCE_VARS = %i[
+  INSTANCE_VARS ||= %i[
     parent_post
     add_raw
     add_title
@@ -89,7 +89,13 @@ class PostSerializer < BasicPostSerializer
              :reviewable_score_pending_count,
              :user_suspended,
              :user_status,
-             :mentioned_users
+             :mentioned_users,
+             :category,
+             :topic_creator,
+             :views,
+             :like_count,
+             :posts_count,
+             :last_posted_at
 
   def initialize(object, opts)
     super(object, opts)
@@ -643,5 +649,39 @@ class PostSerializer < BasicPostSerializer
 
   def post_actions
     @post_actions ||= (@topic_view&.all_post_actions || {})[object.id]
+  end
+
+  def category
+    topic = object.topic
+    {
+      id: topic.category_id,
+      name: topic.category.name,
+      only_admin_can_post: topic.category.groups.exists?(name: "admins"),
+      topic_title: object.topic.title
+    }
+  end
+
+  def topic_creator
+    {
+      id: object.user&.id,
+      username: object.user&.username,
+      avatar: object.user&.avatar_template
+    }
+  end
+
+  def views
+    object.topic&.views
+  end
+
+  def like_count
+    object.topic&.like_count
+  end
+
+  def posts_count
+    object.topic&.posts_count
+  end
+
+  def last_posted_at
+    object.topic&.last_posted_at
   end
 end

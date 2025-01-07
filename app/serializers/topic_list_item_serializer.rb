@@ -15,7 +15,10 @@ class TopicListItemSerializer < ListableTopicSerializer
              :featured_link,
              :featured_link_root_domain,
              :allowed_user_count,
-             :participant_groups
+             :participant_groups,
+             :category,
+             :topic_creator,
+             :cooked
 
   has_many :posters, serializer: TopicPosterSerializer, embed: :objects
   has_many :participants, serializer: TopicPosterSerializer, embed: :objects
@@ -43,6 +46,27 @@ class TopicListItemSerializer < ListableTopicSerializer
     end
 
     object.category_id
+  end
+
+  def category
+    {
+      id: category_id,
+      name: object.category.name,
+      only_admin_can_post: object.category.groups.exists?(name: "admins")
+    }
+  end
+
+  def topic_creator
+    {
+      id: object.user&.id,
+      username: object.user&.username,
+      avatar: object.user&.avatar_template,
+      topic_title: object.title
+    }
+  end
+
+  def cooked
+    object.first_post.cooked
   end
 
   def participants

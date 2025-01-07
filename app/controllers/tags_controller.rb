@@ -576,6 +576,9 @@ class TagsController < ::ApplicationController
     if params[:tag_id] == "none"
       options.delete(:tags)
       options[:no_tags] = true
+    elsif params[:tag_names].present?
+      options[:tags] = params[:tag_names]
+      options[:match_all_tags] ||= false
     else
       options[:tags] = tag_params
       options[:match_all_tags] ||= true

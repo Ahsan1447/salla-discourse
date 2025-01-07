@@ -31,7 +31,8 @@ class BasicCategorySerializer < ApplicationSerializer
              :default_list_filter,
              :minimum_required_tags,
              :navigate_to_first_post_after_read,
-             :custom_fields
+             :custom_fields,
+             :only_admin_can_post
 
   has_one :uploaded_logo, embed: :object, serializer: CategoryUploadSerializer
   has_one :uploaded_logo_dark, embed: :object, serializer: CategoryUploadSerializer
@@ -92,5 +93,9 @@ class BasicCategorySerializer < ApplicationSerializer
 
   def include_custom_fields?
     custom_fields.present?
+  end
+
+  def only_admin_can_post
+    object.groups.exists?(name: "admins")
   end
 end
