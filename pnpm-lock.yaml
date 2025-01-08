@@ -44,8 +44,8 @@ importers:
         specifier: 6.6.0
         version: 6.6.0
       '@glint/core':
-        specifier: ^1.5.0
-        version: 1.5.0(typescript@5.7.2)
+        specifier: ^1.5.1
+        version: 1.5.1(typescript@5.7.2)
       '@glint/environment-ember-loose':
         specifier: ^1.5.0
         version: 1.5.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.0(@babel/core@7.26.0)(ember-source@5.12.0(patch_hash=xx7mvsb7nmshqkkqhmf45r3hse)(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)))
@@ -741,7 +741,7 @@ importers:
         version: 4.2.0
       ember-this-fallback:
         specifier: ^0.4.0
-        version: 0.4.0(patch_hash=znalyv6akdxlqfpmxunrdi3osa)(ember-cli-htmlbars@6.3.0)(ember-source@5.12.0(patch_hash=xx7mvsb7nmshqkkqhmf45r3hse)(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.97.1(@swc/core@1.10.1)(esbuild@0.24.2)))
+        version: 0.4.0(patch_hash=znalyv6akdxlqfpmxunrdi3osa)(ember-cli-htmlbars@6.3.0)(ember-source@5.12.0(patch_hash=xx7mvsb7nmshqkkqhmf45r3hse)(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5))
     devDependencies:
       ember-cli:
         specifier: ~6.0.1
@@ -1084,7 +1084,7 @@ importers:
         version: 5.12.0(patch_hash=xx7mvsb7nmshqkkqhmf45r3hse)(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.97.1(@swc/core@1.10.1)(esbuild@0.24.2))
       ember-this-fallback:
         specifier: ^0.4.0
-        version: 0.4.0(patch_hash=znalyv6akdxlqfpmxunrdi3osa)(ember-cli-htmlbars@6.3.0)(ember-source@5.12.0(patch_hash=xx7mvsb7nmshqkkqhmf45r3hse)(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.97.1(@swc/core@1.10.1)(esbuild@0.24.2)))
+        version: 0.4.0(patch_hash=znalyv6akdxlqfpmxunrdi3osa)(ember-cli-htmlbars@6.3.0)(ember-source@5.12.0(patch_hash=xx7mvsb7nmshqkkqhmf45r3hse)(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5))
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
@@ -2259,8 +2259,8 @@ packages:
   '@glimmer/wire-format@0.93.1':
     resolution: {integrity: sha512-EHtdlZAZsOMBP6b9YC03OyduswqiT6Ei/mR/N1oR/4LZZ8lOyVgp6Q4H0TQW6jprWEiTMdHaO8/SEGTCrrhtUw==}
 
-  '@glint/core@1.5.0':
-    resolution: {integrity: sha512-oo6ZDwX2S0Qqjai/CJH72LHg1U6rvzH1IyiFlWofaFiu/nSg04CDWZuJNPC3r47jz1+SaSI+mVMUaKJznzxzzQ==}
+  '@glint/core@1.5.1':
+    resolution: {integrity: sha512-5VDL/7z9CrirHyx4XyCARDOjujl2Z92hftp19ChXWEPLypukoXW+uDG/awgYCh2T1eNtxufX4j2Liqw0m1eAEw==}
     hasBin: true
     peerDependencies:
       typescript: '>=4.8.0'
@@ -9956,7 +9956,7 @@ snapshots:
       '@glimmer/interfaces': 0.93.0
       '@glimmer/util': 0.93.1
 
-  '@glint/core@1.5.0(typescript@5.7.2)':
+  '@glint/core@1.5.1(typescript@5.7.2)':
     dependencies:
       '@glimmer/syntax': 0.84.3
       escape-string-regexp: 4.0.0
@@ -12834,7 +12834,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-this-fallback@0.4.0(patch_hash=znalyv6akdxlqfpmxunrdi3osa)(ember-cli-htmlbars@6.3.0)(ember-source@5.12.0(patch_hash=xx7mvsb7nmshqkkqhmf45r3hse)(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.97.1(@swc/core@1.10.1)(esbuild@0.24.2))):
+  ember-this-fallback@0.4.0(patch_hash=znalyv6akdxlqfpmxunrdi3osa)(ember-cli-htmlbars@6.3.0)(ember-source@5.12.0(patch_hash=xx7mvsb7nmshqkkqhmf45r3hse)(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)):
     dependencies:
       '@glimmer/syntax': 0.84.3
       babel-plugin-ember-template-compilation: 2.2.5
