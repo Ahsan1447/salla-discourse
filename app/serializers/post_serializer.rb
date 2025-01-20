@@ -665,6 +665,7 @@ class PostSerializer < BasicPostSerializer
     {
       id: object.user&.id,
       username: object.user&.username,
+      name: object.user&.name,
       avatar: object.user&.avatar_template
     }
   end
