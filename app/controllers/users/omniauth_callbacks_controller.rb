@@ -86,7 +86,7 @@ class Users::OmniauthCallbacksController < ApplicationController
 
     cookies["_bypass_cache"] = true
     cookies[:authentication_data] = { value: client_hash.to_json, path: Discourse.base_path("/") }
-    redirect_to "http://localhost:3001/?logged_in_check=true"
+    redirect_to "https://community.salla.com/?logged_in_check=true"
   end
 
   def valid_origin?(uri)
