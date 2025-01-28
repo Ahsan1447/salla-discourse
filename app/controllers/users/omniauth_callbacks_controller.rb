@@ -86,7 +86,7 @@ class Users::OmniauthCallbacksController < ApplicationController
 
     cookies["_bypass_cache"] = true
     cookies[:authentication_data] = { value: client_hash.to_json, path: Discourse.base_path("/") }
-    redirect_to @origin
+    redirect_to "https://community.salla.com/?logged_in_check=true"
   end
 
   def valid_origin?(uri)
@@ -110,9 +110,6 @@ class Users::OmniauthCallbacksController < ApplicationController
   end
 
   def self.find_authenticator(name)
-    if SiteSetting.enable_discourse_connect
-      raise Discourse::InvalidAccess.new(I18n.t("authenticator_not_found"))
-    end
     Discourse.enabled_authenticators.each do |authenticator|
       return authenticator if authenticator.name == name
     end
