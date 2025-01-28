@@ -689,7 +689,7 @@ class PostSerializer < BasicPostSerializer
 
   def first_post_details
     {
-      post_id: object.topic.first_post.id,
+      post_id: object&.topic&.first_post&.id,
       bookmark_id: bookmark_id_for_first_post,
       is_post_liked: is_post_liked?,
       is_post_bookmarked: is_post_bookmarked?
@@ -698,17 +698,17 @@ class PostSerializer < BasicPostSerializer
 
   def is_post_liked?
     DiscourseReactions::ReactionUser.where(
-      user_id: object.topic.user_id,
-      post_id: object.topic.first_post.id
+      user_id: scope.user&.id,
+      post_id: object&.topic&.first_post&.id
     ).exists?
   end
 
     def is_post_bookmarked?
-      object.topic.first_post.bookmarks.exists?(user_id: object.topic.user_id)
+      object&.topic&.first_post&.bookmarks&.where(user_id: scope.user&.id)&.last.present?
     end
 
     def bookmark_id_for_first_post
-      bookmark = object.topic.first_post.bookmarks.find_by(user_id: object.topic.user_id)
+      bookmark = object&.topic&.first_post&.bookmarks&.where(user_id: scope.user&.id).last
       bookmark&.id
     end
-end
+  end
