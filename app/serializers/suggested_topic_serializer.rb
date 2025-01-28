@@ -17,7 +17,8 @@ class SuggestedTopicSerializer < ListableTopicSerializer
              :featured_link,
              :featured_link_root_domain,
              :category,
-             :topic_creator
+             :topic_creator,
+             :first_post_details
   has_many :posters, serializer: SuggestedPosterSerializer, embed: :objects
 
   def posters
@@ -39,9 +40,9 @@ class SuggestedTopicSerializer < ListableTopicSerializer
   def category
     {
       id: object.category.id,
-      name: object.category.name,
+      name: object.category&.name,
       topic_title: object.title,
-      only_admin_can_post: object.category.groups.exists?(name: "admins")
+      only_admin_can_post: object.category&.groups&.exists?(name: "admins")
     }
   end
 
@@ -49,8 +50,34 @@ class SuggestedTopicSerializer < ListableTopicSerializer
     {
       id: object.user&.id,
       username: object.user&.username,
-      name: object.user&.name,
       avatar: object.user&.avatar_template
     }
   end
+
+  def first_post_details
+    {
+      post_id: object.first_post.id,
+      bookmark_id: bookmark_id_for_first_post,
+      is_post_liked: is_post_liked?,
+      is_post_bookmarked: is_post_bookmarked?
+    }
+  end
+
+  private
+
+    def is_post_liked?
+      DiscourseReactions::ReactionUser.where(
+        user_id: object.user_id,
+        post_id: object.first_post.id
+      ).exists?
+    end
+
+      def is_post_bookmarked?
+        object.first_post.bookmarks.exists?(user_id: object.user_id)
+      end
+
+      def bookmark_id_for_first_post
+        bookmark = object.first_post.bookmarks.find_by(user_id: object.user_id)
+        bookmark&.id
+      end
 end

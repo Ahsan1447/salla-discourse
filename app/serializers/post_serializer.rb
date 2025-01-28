@@ -95,7 +95,8 @@ class PostSerializer < BasicPostSerializer
              :views,
              :like_count,
              :posts_count,
-             :last_posted_at
+             :last_posted_at,
+             :first_post_details
 
   def initialize(object, opts)
     super(object, opts)
@@ -685,4 +686,29 @@ class PostSerializer < BasicPostSerializer
   def last_posted_at
     object.topic&.last_posted_at
   end
+
+  def first_post_details
+    {
+      post_id: object.topic.first_post.id,
+      bookmark_id: bookmark_id_for_first_post,
+      is_post_liked: is_post_liked?,
+      is_post_bookmarked: is_post_bookmarked?
+    }
+  end
+
+  def is_post_liked?
+    DiscourseReactions::ReactionUser.where(
+      user_id: object.topic.user_id,
+      post_id: object.topic.first_post.id
+    ).exists?
+  end
+
+    def is_post_bookmarked?
+      object.topic.first_post.bookmarks.exists?(user_id: object.topic.user_id)
+    end
+
+    def bookmark_id_for_first_post
+      bookmark = object.topic.first_post.bookmarks.find_by(user_id: object.topic.user_id)
+      bookmark&.id
+    end
 end

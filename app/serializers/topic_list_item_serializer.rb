@@ -18,7 +18,8 @@ class TopicListItemSerializer < ListableTopicSerializer
              :participant_groups,
              :category,
              :topic_creator,
-             :cooked
+             :cooked,
+             :first_post_details
 
   has_many :posters, serializer: TopicPosterSerializer, embed: :objects
   has_many :participants, serializer: TopicPosterSerializer, embed: :objects
@@ -51,8 +52,8 @@ class TopicListItemSerializer < ListableTopicSerializer
   def category
     {
       id: category_id,
-      name: object.category.name,
-      only_admin_can_post: object.category.groups.exists?(name: "admins")
+      name: object.category&.name,
+      only_admin_can_post: object.category&.groups&.exists?(name: "admins")
     }
   end
 
@@ -60,9 +61,9 @@ class TopicListItemSerializer < ListableTopicSerializer
     {
       id: object.user&.id,
       username: object.user&.username,
-      name: object.user&.name,
       avatar: object.user&.avatar_template,
-      topic_title: object.title
+      topic_title: object.title,
+      name: object.user&.name
     }
   end
 
@@ -118,4 +119,31 @@ class TopicListItemSerializer < ListableTopicSerializer
   def include_allowed_user_count?
     object.private_message?
   end
+
+  def first_post_details
+    {
+      post_id: object.first_post.id,
+      bookmark_id: bookmark_id_for_first_post,
+      is_post_liked: is_post_liked?,
+      is_post_bookmarked: is_post_bookmarked?
+    }
+  end
+
+  private
+
+  def is_post_liked?
+    DiscourseReactions::ReactionUser.where(
+      user_id: object.user_id,
+      post_id: object.first_post.id
+    ).exists?
+  end
+
+    def is_post_bookmarked?
+      object.first_post.bookmarks.exists?(user_id: object.user_id)
+    end
+
+    def bookmark_id_for_first_post
+      bookmark = object.first_post.bookmarks.find_by(user_id: object.user_id)
+      bookmark&.id
+    end
 end
